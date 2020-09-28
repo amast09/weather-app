@@ -18,6 +18,7 @@
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
+    "format": "prettier --write .",
     "prettier-check": "prettier --check .",
     "start": "react-scripts start",
     "tdd": "react-scripts test",
