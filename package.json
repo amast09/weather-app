@@ -16,11 +16,12 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
     "tdd": "react-scripts test",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "type-check": "tsc"
   },
   "eslintConfig": {
     "extends": "react-app"
