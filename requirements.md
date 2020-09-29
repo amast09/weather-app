@@ -29,3 +29,4 @@
   - [ ] State
   - [ ] City, State
   - [ ] City, State, Zip code
+- [ ] Enriched error messages for Geo Location errors
