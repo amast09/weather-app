@@ -20,13 +20,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run prettier-check
-      - run: CI=true npm run test
-      - name: Deploy
-          run: npm run build
-          - name: Deploy to gh-pages
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-              publish_dir: ./build
+      - name: Install Node Dependencies
+        run: npm install
+      - name: Check Formatting
+        run: npm run prettier-check
+      - name: Typecheck the Typescript
+        run: npm run type-check
+      - name: Run Tests
+        run: CI=true npm run test
+      - name: Build Production Artifacts
+        run: npm run build
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./build
