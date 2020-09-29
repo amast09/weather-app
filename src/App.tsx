@@ -112,7 +112,7 @@ const App: React.FC = () => {
     }
   };
 
-  const userCurrentLocationButtonClickHandler = async () => {
+  const useCurrentLocationButtonClickHandler = async () => {
     try {
       const position = await loadUserPosition();
       await loadUserWeather({
@@ -131,7 +131,7 @@ const App: React.FC = () => {
       </header>
       <main>
         <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
-        <button onClick={userCurrentLocationButtonClickHandler}>
+        <button onClick={useCurrentLocationButtonClickHandler}>
           Use my current location
         </button>
         <AsyncCurrentPosition asyncPosition={usersPosition} />
