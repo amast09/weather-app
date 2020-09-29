@@ -1,6 +1,6 @@
 # Requirements
 
-- [ ] Use OpenWeather API to retrieve weather data
+- [x] Use OpenWeather API to retrieve weather data
 
 ## MVP
 
@@ -9,7 +9,7 @@
 - [ ] Display loading screen when weather request is in flight
 - [ ] Error screen for failed network request
 - [ ] Error screen for denied Geo location access
-- [ ] 5 day forecast displayed on successful request of data
+- [ ] Display current weather on successful request of data
 
 ## Greedy Release
 
@@ -29,4 +29,6 @@
   - [ ] State
   - [ ] City, State
   - [ ] City, State, Zip code
-- [ ] Enriched error messages for Geo Location errors
+- [ ] Enriched error messages for Geo Location failures
+- [ ] Enriched error messages for Open Weather API request failures
+- [ ] 5 day forecast
