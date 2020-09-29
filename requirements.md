@@ -4,11 +4,11 @@
 
 ## MVP
 
-- [ ] Browser attempts to get lat/lng using Browser Geo Location APIs
+- [x] Browser attempts to get lat/lng using Browser Geo Location APIs
 - [ ] Lat and lng used to request weather data
 - [ ] Display loading screen when weather request is in flight
 - [ ] Error screen for failed network request
-- [ ] Error screen for denied Geo location access
+- [x] Error screen for denied Geo location access
 - [ ] Display current weather on successful request of data
 
 ## Greedy Release
