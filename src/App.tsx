@@ -6,6 +6,7 @@ import AsyncRequest, {
   AsyncRequestNotStarted,
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
+import environment from "./environment";
 
 const CurrentPosition: React.FC<Readonly<{ position: Position }>> = ({
   position,
@@ -60,6 +61,7 @@ const App: React.FC = () => {
           Use my current location
         </button>
         <AsyncCurrentPosition asyncPosition={userPosition} />
+        <p>{environment.openWeatherApiKey}</p>
       </main>
     </div>
   );

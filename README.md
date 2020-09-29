@@ -28,6 +28,15 @@ nvm use
 npm install
 ```
 
+3 - Fill in required environment variables
+
+```
+cp .env.local.example .env.local
+```
+
+Replace `replace-me-with-valid-api-key` inside of `.env.local` with a valid
+[Open Weather API Key](https://openweathermap.org/appid)
+
 ## Run the app
 
 ```
