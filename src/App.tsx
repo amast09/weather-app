@@ -3,10 +3,45 @@ import AsyncRequest, {
   AsyncRequestCompleted,
   AsyncRequestFailed,
   AsyncRequestKinds,
+  AsyncRequestLoading,
   AsyncRequestNotStarted,
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
 import environment from "./environment";
+import createOpenWeatherApi, {
+  CurrentWeatherConditions,
+} from "./openWeatherApi";
+import LatLon from "./LatLon";
+
+const openWeatherApi = createOpenWeatherApi(environment.openWeatherApiKey);
+
+const fallBackLatLon: LatLon = {
+  lat: 34.6787,
+  lon: 82.8432,
+};
+
+const CurrentWeather: React.FC<Readonly<{
+  currentWeather: CurrentWeatherConditions;
+}>> = ({ currentWeather }) => (
+  <div>
+    <p>{JSON.stringify(currentWeather)}</p>
+  </div>
+);
+
+const AsyncCurrentWeather: React.FC<Readonly<{
+  asyncCurrentWeather: AsyncRequest<CurrentWeatherConditions>;
+}>> = ({ asyncCurrentWeather }) => {
+  switch (asyncCurrentWeather.kind) {
+    case AsyncRequestKinds.Completed:
+      return <CurrentWeather currentWeather={asyncCurrentWeather.result} />;
+    case AsyncRequestKinds.Failed:
+      return <p>Unable to load current weather conditions</p>;
+    case AsyncRequestKinds.Loading:
+      return <p>LOADING WEATHER!</p>;
+    case AsyncRequestKinds.NotStarted:
+      return <></>;
+  }
+};
 
 const CurrentPosition: React.FC<Readonly<{ position: Position }>> = ({
   position,
@@ -25,7 +60,12 @@ const AsyncCurrentPosition: React.FC<Readonly<{
     case AsyncRequestKinds.Completed:
       return <CurrentPosition position={asyncPosition.result} />;
     case AsyncRequestKinds.Failed:
-      return <p>Unable to retrieve position</p>;
+      return (
+        <p>
+          Unable to load current user location, using the fallback Latitude:
+          {fallBackLatLon.lat} Longitude: {fallBackLatLon.lon}
+        </p>
+      );
     case AsyncRequestKinds.Loading:
       return (
         <p>
@@ -39,16 +79,49 @@ const AsyncCurrentPosition: React.FC<Readonly<{
 };
 
 const App: React.FC = () => {
-  const [userPosition, setUserPosition] = React.useState<
+  const [usersPosition, setUsersPosition] = React.useState<
     AsyncRequest<Position>
   >(AsyncRequestNotStarted);
+  const [usersWeather, setUsersWeather] = React.useState<
+    AsyncRequest<CurrentWeatherConditions>
+  >(AsyncRequestNotStarted);
 
-  const userCurrentLocationButtonClickHandler = () => {
-    getLocation(window.navigator)
-      .then((position) => setUserPosition(AsyncRequestCompleted(position)))
-      .catch(() => {
-        setUserPosition(AsyncRequestFailed(undefined));
+  const loadUserWeather = async (latLon: LatLon): Promise<void> => {
+    setUsersWeather(AsyncRequestLoading());
+
+    try {
+      const weatherConditions = await openWeatherApi.getWeatherForLatLng(
+        latLon
+      );
+      setUsersWeather(AsyncRequestCompleted(weatherConditions));
+    } catch (_) {
+      setUsersWeather(AsyncRequestFailed(undefined));
+    }
+  };
+
+  const loadUserPosition = async (): Promise<Position> => {
+    setUsersPosition(AsyncRequestLoading());
+
+    try {
+      const position = await getLocation(window.navigator);
+      setUsersPosition(AsyncRequestCompleted(position));
+      return position;
+    } catch (e) {
+      setUsersPosition(AsyncRequestFailed(undefined));
+      throw e;
+    }
+  };
+
+  const userCurrentLocationButtonClickHandler = async () => {
+    try {
+      const position = await loadUserPosition();
+      await loadUserWeather({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
       });
+    } catch (_) {
+      await loadUserWeather(fallBackLatLon);
+    }
   };
 
   return (
@@ -57,11 +130,11 @@ const App: React.FC = () => {
         <h1>Current Weather</h1>
       </header>
       <main>
+        <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
         <button onClick={userCurrentLocationButtonClickHandler}>
           Use my current location
         </button>
-        <AsyncCurrentPosition asyncPosition={userPosition} />
-        <p>{environment.openWeatherApiKey}</p>
+        <AsyncCurrentPosition asyncPosition={usersPosition} />
       </main>
     </div>
   );
