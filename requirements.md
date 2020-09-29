@@ -11,7 +11,7 @@
 - [ ] Error screen for denied Geo location access
 - [ ] 5 day forecast displayed on successful request of data
 
-## Maybe Release
+## Greedy Release
 
 - [ ] Search input that accepts zipcode
 - [ ] Application retrieves weather data when user hits enter or submit button
@@ -20,7 +20,7 @@
 - [ ] Display what is currently being used for weather data (zip code vs lat lng)
 - [ ] Error screen for if zip code returns no data
 
-## Greedy Release
+## Extra Greedy Release
 
 - [ ] Search input classifies the following queries to use with Weather API
   - [ ] Lat Lng
