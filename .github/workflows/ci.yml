@@ -60,6 +60,6 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: aws-ecr-task-definition
+          task-definition: aws-ecr-task-definition.json
           container-name: weather-app
           image: ${{ steps.build-image.outputs.image }}
