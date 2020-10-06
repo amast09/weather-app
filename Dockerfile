@@ -6,6 +6,7 @@ WORKDIR /app
 
 # install our node package dependancies
 COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 RUN npm install
 
 # add everything in our GIT repo to our working directory
@@ -20,6 +21,7 @@ FROM node:14.12.0-alpine AS release
 WORKDIR /app
 
 COPY --from=base /app/package.json ./
+COPY --from=base /app/package-lock.json ./
 RUN npm install --only=production
 COPY --from=base /app ./
 
