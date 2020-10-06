@@ -3,27 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.62",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
     "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
     "prettier-check": "prettier --check .",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "dev": "concurrently -p name -c \"yellow,magenta,blue\" -n \"webpack-server,nodemon-server,CRA\" \"npm run dev:server:webpack\" \"npm run dev:server:nodemon\" \"npm run dev:client\"",
+    "dev:client": "wait-on -l tcp:3001 && react-scripts start",
+    "dev:server": "concurrently -p name -c \"yellow,magenta\" -n \"webpack-server,nodemon-server\" \"npm run dev:server:webpack\" \"npm run dev:server:nodemon\"",
+    "dev:server:webpack": "webpack --config webpack.config.server.js --watch",
+    "dev:server:nodemon": "rm -f build/server.js && wait-on -l build/server.js && nodemon build/server.js",
+    "build": "npm run build:client && npm run build:backend",
+    "build:client": "react-scripts build",
+    "build:server": "webpack --config webpack.config.server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,7 +46,22 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.8",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.62",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "concurrently": "^5.3.0",
     "nock": "^13.0.4",
-    "prettier": "2.1.2"
+    "nodemon": "^2.0.4",
+    "prettier": "2.1.2",
+    "ts-loader": "^8.0.4",
+    "wait-on": "^5.2.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
   }
 }
