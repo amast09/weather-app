@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+import environment from "./environment";
 
 const buildDir = path.join(process.cwd() + "/build");
 const app = express();
@@ -17,8 +18,6 @@ app.get("/", (_, res) => {
   res.sendFile(path.join(buildDir, "index.html"));
 });
 
-const port = 3001;
-console.log("checking port", port);
-app.listen(port, () => {
-  console.log(`Server now listening on port: ${port}`);
+app.listen(environment.apiPort, () => {
+  console.log(`Server now listening on port: ${environment.apiPort}`);
 });

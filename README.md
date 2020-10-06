@@ -31,7 +31,7 @@ npm install
 3 - Fill in required environment variables
 
 ```
-cp .env.local.example .env.local
+cp .env.example .env
 ```
 
 Replace `replace-me-with-valid-api-key` inside of `.env.local` with a valid

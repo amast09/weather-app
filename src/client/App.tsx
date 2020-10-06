@@ -7,14 +7,13 @@ import AsyncRequest, {
   AsyncRequestNotStarted,
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
-import environment from "./environment";
 import createOpenWeatherApi, {
   CurrentWeatherConditions,
 } from "./openWeatherApi";
 import LatLon from "./LatLon";
 import sum from "../shared/sum";
 
-const openWeatherApi = createOpenWeatherApi(environment.openWeatherApiKey);
+const openWeatherApi = createOpenWeatherApi("moving into API");
 
 const fallBackLatLon: LatLon = {
   lat: 34.6787,
