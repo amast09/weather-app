@@ -10,5 +10,5 @@
     "moduleResolution": "node"
   },
   "exclude": ["../../build", "../client"],
-  "include": ["."]
+  "include": [".", "../src/shared"]
 }

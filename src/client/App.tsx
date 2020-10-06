@@ -12,6 +12,7 @@ import createOpenWeatherApi, {
   CurrentWeatherConditions,
 } from "./openWeatherApi";
 import LatLon from "./LatLon";
+import sum from "../shared/sum";
 
 const openWeatherApi = createOpenWeatherApi(environment.openWeatherApiKey);
 
@@ -127,7 +128,7 @@ const App: React.FC = () => {
   return (
     <div className="weather-app">
       <header>
-        <h1>Current Weather</h1>
+        <h1>Current Weather {sum(1, 2)}</h1>
       </header>
       <main>
         <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
