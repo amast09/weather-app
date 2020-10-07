@@ -14,18 +14,8 @@
           "containerPort": 443
         },
         {
-          "hostPort": 443,
-          "protocol": "udp",
-          "containerPort": 443
-        },
-        {
           "hostPort": 80,
           "protocol": "tcp",
-          "containerPort": 80
-        },
-        {
-          "hostPort": 80,
-          "protocol": "udp",
           "containerPort": 80
         }
       ],
