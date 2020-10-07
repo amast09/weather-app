@@ -73,6 +73,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: weather-app
+          service: weather-app-service
           cluster: weather-app
           wait-for-service-stability: true
