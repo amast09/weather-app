@@ -65,10 +65,7 @@
   "placementConstraints": [],
   "memory": "1024",
   "taskRoleArn": null,
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
+  "compatibilities": ["EC2", "FARGATE"],
   "taskDefinitionArn": "arn:aws:ecs:us-east-1:694576376659:task-definition/weather-app-fargate:1",
   "family": "weather-app-fargate",
   "requiresAttributes": [
@@ -104,9 +101,7 @@
     }
   ],
   "pidMode": null,
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
+  "requiresCompatibilities": ["FARGATE"],
   "networkMode": "awsvpc",
   "cpu": "512",
   "revision": 1,
