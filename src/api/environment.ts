@@ -1,8 +1,14 @@
 import dotenv from "dotenv";
 
+export enum EnvironmentLocation {
+  Production = "Production",
+  Development = "Development",
+}
+
 interface Environment {
   readonly openWeatherApiKey: string;
   readonly apiPort: string;
+  readonly location: EnvironmentLocation;
 }
 
 const boostrapEnvironment = (): Environment => {
@@ -22,6 +28,10 @@ const boostrapEnvironment = (): Environment => {
     return {
       openWeatherApiKey: process.env.OPEN_WEATHER_API_KEY,
       apiPort: process.env.API_PORT,
+      location:
+        process.env.NODE_ENV === "production"
+          ? EnvironmentLocation.Production
+          : EnvironmentLocation.Development,
     };
   }
 };
