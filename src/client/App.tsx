@@ -9,7 +9,6 @@ import AsyncRequest, {
 import getLocation from "./getLocation";
 import createOpenWeatherApi from "./openWeatherApi";
 import LatLon from "./LatLon";
-import sum from "../shared/sum";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
 const openWeatherApi = createOpenWeatherApi("moving into API");
@@ -126,7 +125,7 @@ const App: React.FC = () => {
   return (
     <div className="weather-app">
       <header>
-        <h1>Current Weather {sum(1, 2)}</h1>
+        <h1>Current Weather</h1>
       </header>
       <main>
         <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
