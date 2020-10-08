@@ -3,10 +3,9 @@
  */
 import axios from "axios";
 import nock from "nock";
-import createOpenWeatherApi, {
-  CurrentWeatherConditions,
-} from "./openWeatherApi";
+import createOpenWeatherApi from "./openWeatherApi";
 import LatLon from "./LatLon";
+import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
 const fakeApiKey = "gibberish";

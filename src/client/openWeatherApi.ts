@@ -1,51 +1,8 @@
 import LatLon from "./LatLon";
 import axios from "axios";
+import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
-
-export interface CurrentWeatherConditions {
-  readonly coord: {
-    readonly lon: number;
-    readonly lat: number;
-  };
-  readonly weather: [
-    {
-      readonly id: number;
-      readonly main: string;
-      readonly description: string;
-      readonly icon: string;
-    }
-  ];
-  readonly base: string;
-  readonly main: {
-    readonly temp: number;
-    readonly feels_like: number;
-    readonly temp_min: number;
-    readonly temp_max: number;
-    readonly pressure: number;
-    readonly humidity: number;
-  };
-  readonly wind: {
-    readonly speed: number;
-    readonly deg: number;
-  };
-  readonly clouds: {
-    readonly all: number;
-  };
-  readonly dt: number;
-  readonly sys: {
-    readonly type: number;
-    readonly id: number;
-    readonly message: number;
-    readonly country: string;
-    readonly sunrise: number;
-    readonly sunset: number;
-  };
-  readonly timezone: number;
-  readonly id: number;
-  readonly name: string;
-  readonly cod: number;
-}
 
 const getWeatherForLatLng = (apiKey: string) => (
   latLon: LatLon

@@ -13,8 +13,8 @@ const getWeatherQuerySchema: Joi.Schema = Joi.object({
 
 const getWeather: RequestHandler = (req: Request, res) => {
   const queryValidationResult = validateObject(
-    req.query,
-    getWeatherQuerySchema
+    getWeatherQuerySchema,
+    req.query
   );
 
   switch (queryValidationResult.result) {

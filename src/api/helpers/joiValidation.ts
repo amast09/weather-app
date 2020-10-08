@@ -15,11 +15,11 @@ interface ValidResult<T> {
   readonly value: T;
 }
 
-type ValidationResult<T> = InvalidResult | ValidResult<T>;
+export type ValidationResult<T> = InvalidResult | ValidResult<T>;
 
 function validateObject<T>(
-  objectToValidate: any,
-  schema: Joi.Schema
+  schema: Joi.Schema,
+  objectToValidate: any
 ): ValidationResult<T> {
   const { error }: Joi.ValidationResult = schema.validate(objectToValidate);
 

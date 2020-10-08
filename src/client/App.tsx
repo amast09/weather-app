@@ -7,11 +7,10 @@ import AsyncRequest, {
   AsyncRequestNotStarted,
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
-import createOpenWeatherApi, {
-  CurrentWeatherConditions,
-} from "./openWeatherApi";
+import createOpenWeatherApi from "./openWeatherApi";
 import LatLon from "./LatLon";
 import sum from "../shared/sum";
+import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
 const openWeatherApi = createOpenWeatherApi("moving into API");
 
