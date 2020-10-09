@@ -1,0 +1,7 @@
+.current-location-icon {
+  width: 20px;
+  height: 20px;
+}
+.weather-form {
+  display: flex;
+}

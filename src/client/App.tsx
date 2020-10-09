@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import AsyncRequest, {
   AsyncRequestCompleted,
   AsyncRequestFailed,
@@ -8,18 +8,15 @@ import AsyncRequest, {
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
 import apiClient from "./apiClient";
-import LatLon from "./types/LatLon";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
-
-const fallBackLatLon: LatLon = {
-  lat: 34.6787,
-  lon: 82.8432,
-};
+import CurrentLocation from "./icons/CurrentLocation";
+import "./App.css";
 
 const CurrentWeather: React.FC<Readonly<{
   currentWeather: CurrentWeatherConditions;
 }>> = ({ currentWeather }) => (
   <div>
+    <h4>Current Weather Conditions</h4>
     <p>{JSON.stringify(currentWeather)}</p>
   </div>
 );
@@ -39,36 +36,15 @@ const AsyncCurrentWeather: React.FC<Readonly<{
   }
 };
 
-const CurrentPosition: React.FC<Readonly<{ position: Position }>> = ({
-  position,
-}) => (
-  <div>
-    <h1>Current Position</h1>
-    <p>Latitude: {position.coords.latitude}</p>
-    <p>Longitude: {position.coords.longitude}</p>
-  </div>
-);
-
 const AsyncCurrentPosition: React.FC<Readonly<{
   asyncPosition: AsyncRequest<Position>;
 }>> = ({ asyncPosition }) => {
   switch (asyncPosition.kind) {
-    case AsyncRequestKinds.Completed:
-      return <CurrentPosition position={asyncPosition.result} />;
     case AsyncRequestKinds.Failed:
-      return (
-        <p>
-          Unable to load current user location, using the fallback Latitude:
-          {fallBackLatLon.lat} Longitude: {fallBackLatLon.lon}
-        </p>
-      );
+      return <p>Unable to load current user location</p>;
     case AsyncRequestKinds.Loading:
-      return (
-        <p>
-          Please enable browser location in order to find weather for current
-          location
-        </p>
-      );
+      return <p>Loading Latitude and Longitude</p>;
+    case AsyncRequestKinds.Completed:
     case AsyncRequestKinds.NotStarted:
       return <></>;
   }
@@ -81,56 +57,66 @@ const App: React.FC = () => {
   const [usersWeather, setUsersWeather] = React.useState<
     AsyncRequest<CurrentWeatherConditions>
   >(AsyncRequestNotStarted);
+  const [userSearch, setUserSearch] = React.useState<string>("");
 
-  const loadUserWeather = async (latLon: LatLon): Promise<void> => {
+  const onGetWeatherSubmit = (e: FormEvent): void => {
+    e.preventDefault();
+
     setUsersWeather(AsyncRequestLoading());
 
-    try {
-      const weatherConditions = await apiClient.getCurrentWeather(
-        `${latLon.lat}, ${latLon.lon}`
-      );
-      setUsersWeather(AsyncRequestCompleted(weatherConditions));
-    } catch (_) {
-      setUsersWeather(AsyncRequestFailed(undefined));
-    }
+    apiClient
+      .getCurrentWeather(userSearch)
+      .then((weatherConditions) =>
+        setUsersWeather(AsyncRequestCompleted(weatherConditions))
+      )
+      .catch(() => {
+        setUsersWeather(AsyncRequestFailed(undefined));
+      });
   };
 
-  const loadUserPosition = async (): Promise<Position> => {
+  const setUserPosition = (): void => {
     setUsersPosition(AsyncRequestLoading());
 
-    try {
-      const position = await getLocation(window.navigator);
-      setUsersPosition(AsyncRequestCompleted(position));
-      return position;
-    } catch (e) {
-      setUsersPosition(AsyncRequestFailed(undefined));
-      throw e;
-    }
+    getLocation(window.navigator)
+      .then((position) => {
+        setUsersPosition(AsyncRequestCompleted(position));
+        setUserSearch(
+          `${position.coords.latitude}, ${position.coords.longitude}`
+        );
+      })
+      .catch(() => {
+        setUsersPosition(AsyncRequestFailed(undefined));
+      });
   };
 
-  const useCurrentLocationButtonClickHandler = async () => {
-    try {
-      const position = await loadUserPosition();
-      await loadUserWeather({
-        lat: position.coords.latitude,
-        lon: position.coords.longitude,
-      });
-    } catch (_) {
-      await loadUserWeather(fallBackLatLon);
-    }
+  const onUserSearchInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setUserSearch(e.target.value);
   };
 
   return (
     <div className="weather-app">
       <header>
-        <h1>Current Weather</h1>
+        <h1>Your Weather Report</h1>
       </header>
       <main>
-        <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
-        <button onClick={useCurrentLocationButtonClickHandler}>
-          Use my current location
-        </button>
+        <form className="weather-form" onSubmit={onGetWeatherSubmit}>
+          <input
+            type="search"
+            value={userSearch}
+            onChange={onUserSearchInputChange}
+          />
+          <div onClick={setUserPosition}>
+            <CurrentLocation />
+          </div>
+          <button type="submit">Get Weather</button>
+        </form>
+        {/* TODO (Nice to have):
+            debounce the loading treatment if the async actions are quick
+        */}
         <AsyncCurrentPosition asyncPosition={usersPosition} />
+        <AsyncCurrentWeather asyncCurrentWeather={usersWeather} />
       </main>
     </div>
   );
