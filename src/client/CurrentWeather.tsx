@@ -2,84 +2,102 @@ import React from "react";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 import "./CurrentWeatherStyles.css";
 
-const getDisplayDate = (unixUtcMilliSeconds: number): string => {
-  const date = new Date();
-  date.setUTCMilliseconds(unixUtcMilliSeconds);
-  return date.toDateString();
-};
-
-// TODO (nice to have): display time better
-const getDisplayTime = (unixUtcMilliSeconds: number): string => {
-  const date = new Date();
-  date.setUTCMilliseconds(unixUtcMilliSeconds);
-  return date.toTimeString();
-};
-
 const CurrentWeather: React.FC<Readonly<{
   conditions: CurrentWeatherConditions;
 }>> = ({ conditions }) => {
-  const displayDate = getDisplayDate(conditions.dt);
-  const sunRiseDisplayDate = getDisplayTime(conditions.sys.sunrise);
-  const sunSetDisplayDate = getDisplayTime(conditions.sys.sunset);
+  const displayDate = new Date(conditions.dt * 1000).toLocaleDateString();
+  const sunRiseDisplayDate = new Date(
+    conditions.sys.sunrise * 1000
+  ).toLocaleTimeString();
+  const sunSetDisplayDate = new Date(
+    conditions.sys.sunset * 1000
+  ).toLocaleTimeString();
 
   return (
     <div className="current-weather-conditions">
       <div>
-        <div className="current-weather-conditions__metric">
-          <label>Location:</label>
-          <p>{conditions.name}</p>
+        <div key="location" className="current-weather-conditions__metric">
+          <label id="current-condition-location">Location:</label>
+          <p aria-labelledby="current-condition-location">{conditions.name}</p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Date:</label>
-          <p>{displayDate}</p>
+        <div key="date" className="current-weather-conditions__metric">
+          <label id="current-condition-date">Date:</label>
+          <p aria-labelledby="current-condition-date">{displayDate}</p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Current Temp:</label>
-          <p>{conditions.main.temp}</p>
+        <div key="current-temp" className="current-weather-conditions__metric">
+          <label id="current-condition-current-temp">Current Temp:</label>
+          <p aria-labelledby="current-condition-current-temp">
+            {conditions.main.temp}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Feels Like:</label>
-          <p>{conditions.main.feels_like}</p>
+        <div
+          key="feels-like-temp"
+          className="current-weather-conditions__metric"
+        >
+          <label id="current-condition-feels-like-temp">Feels Like:</label>
+          <p aria-labelledby="current-condition-feels-like-temp">
+            {conditions.main.feels_like}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>High Temp:</label>
-          <p>{conditions.main.temp_max}</p>
+        <div key="high-temp" className="current-weather-conditions__metric">
+          <label id="current-condition-high-temp">High Temp:</label>
+          <p aria-labelledby="current-condition-high-temp">
+            {conditions.main.temp_max}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Low Temp:</label>
-          <p>{conditions.main.temp_min}</p>
+        <div key="low-temp" className="current-weather-conditions__metric">
+          <label id="current-condition-low-temp">Low Temp:</label>
+          <p aria-labelledby="current-condition-low-temp">
+            {conditions.main.temp_min}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Humidity:</label>
-          <p>{conditions.main.humidity}</p>
+        <div key="humidity" className="current-weather-conditions__metric">
+          <label id="current-condition-humidity">Humidity:</label>
+          <p aria-labelledby="current-condition-humidity">
+            {conditions.main.humidity} %
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Wind Speed:</label>
-          <p>{conditions.wind.speed}</p>
+        <div key="wind-speed" className="current-weather-conditions__metric">
+          <label id="current-condition-wind-speed">Wind Speed:</label>
+          <p aria-labelledby="current-condition-wind-speed">
+            {conditions.wind.speed}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Wind Direction:</label>
-          <p>{conditions.wind.deg} deg</p>
+        <div
+          key="wind-direction"
+          className="current-weather-conditions__metric"
+        >
+          <label id="current-condition-wind-direction">Wind Direction:</label>
+          <p aria-labelledby="current-condition-wind-direction">
+            {conditions.wind.deg} deg
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Sunrise:</label>
-          <p>{sunRiseDisplayDate}</p>
+        <div key="sunrise-time" className="current-weather-conditions__metric">
+          <label id="current-condition-sunrise-time">Sunrise:</label>
+          <p aria-labelledby="current-condition-sunrise-time">
+            {sunRiseDisplayDate}
+          </p>
         </div>
-        <div className="current-weather-conditions__metric">
-          <label>Sunset:</label>
-          <p>{sunSetDisplayDate}</p>
+        <div key="sunset-time" className="current-weather-conditions__metric">
+          <label id="current-condition-sunset-time">Sunset:</label>
+          <p aria-labelledby="current-condition-sunset-time">
+            {sunSetDisplayDate}
+          </p>
         </div>
       </div>
-      <div className="current-weather-conditions__image-container">
-        {conditions.weather.map((w) => (
-          <>
+      <div
+        key="condition-image-container"
+        className="current-weather-conditions__image-container"
+      >
+        {conditions.weather.map((w, idx) => (
+          <React.Fragment key={`condition-${idx}`}>
             <img
               className="current-weather-conditions__image"
               src={`http://openweathermap.org/img/wn/${w.icon}@2x.png`}
               alt="weather condition icon"
             />
-            <p>{w.description}</p>
-          </>
+            <p aria-labelledby="current-condition-">{w.description}</p>
+          </React.Fragment>
         ))}
       </div>
     </div>
