@@ -3,7 +3,7 @@ import nock from "nock";
 import apiClient from "./apiClient";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
-const BASE_URL = 'http://localhost';
+const BASE_URL = "http://localhost";
 axios.defaults.baseURL = BASE_URL;
 
 describe("openWeatherApi", () => {
