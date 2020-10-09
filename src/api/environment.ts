@@ -24,7 +24,7 @@ const getEnvironmentLocation = (): EnvironmentLocation => {
   }
 };
 
-const boostrapEnvironment = (): Environment => {
+const getEnvironment = (): Environment => {
   const result = dotenv.config();
 
   if (result.error) {
@@ -44,4 +44,4 @@ const boostrapEnvironment = (): Environment => {
   }
 };
 
-export default boostrapEnvironment();
+export default getEnvironment;

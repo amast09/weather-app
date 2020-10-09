@@ -1,5 +1,7 @@
-import environment from "../environment";
+import getEnvironment from "../environment";
 import createApi from "../index";
+
+const environment = getEnvironment();
 
 const api = createApi(environment);
 
