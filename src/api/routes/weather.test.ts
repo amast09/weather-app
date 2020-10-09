@@ -86,7 +86,7 @@ describe("weather routes", () => {
       nock(OPEN_WEATHER_API_BASE_URL)
         .get("/data/2.5/weather")
         .query({
-          zipCode: locationQueryParamValue,
+          zip: locationQueryParamValue,
           appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(500);
@@ -105,7 +105,7 @@ describe("weather routes", () => {
       nock(OPEN_WEATHER_API_BASE_URL)
         .get("/data/2.5/weather")
         .query({
-          zipCode: locationQueryParamValue,
+          zip: locationQueryParamValue,
           appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
@@ -150,8 +150,7 @@ describe("weather routes", () => {
       nock(OPEN_WEATHER_API_BASE_URL)
         .get("/data/2.5/weather")
         .query({
-          city: city,
-          state: state,
+          q: `${city},${state}`,
           appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
@@ -172,7 +171,7 @@ describe("weather routes", () => {
       nock(OPEN_WEATHER_API_BASE_URL)
         .get("/data/2.5/weather")
         .query({
-          city,
+          q: `${city}`,
           appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);

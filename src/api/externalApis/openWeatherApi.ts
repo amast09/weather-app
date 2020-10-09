@@ -10,7 +10,7 @@ const getRequestData = (query: LocationQuery): Dictionary<string> => {
   switch (query.queryType) {
     case QueryType.ZipCode:
       return {
-        zipCode: query.zipCode,
+        zip: query.zipCode,
       };
     case QueryType.LatitudeLongitude:
       return {
@@ -19,12 +19,11 @@ const getRequestData = (query: LocationQuery): Dictionary<string> => {
       };
     case QueryType.City:
       return {
-        city: query.city,
+        q: query.city,
       };
     case QueryType.CityState:
       return {
-        city: query.city,
-        state: query.state,
+        q: `${query.city},${query.state}`,
       };
   }
 };

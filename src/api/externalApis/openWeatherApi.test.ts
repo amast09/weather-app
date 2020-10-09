@@ -89,7 +89,7 @@ describe("openWeatherApi", () => {
         nock(OPEN_WEATHER_API_BASE_URL)
           .get("/data/2.5/weather")
           .query({
-            zipCode: query.zipCode,
+            zip: query.zipCode,
             appid: fakeApiKey,
           })
           .reply(200, fakeSuccessfulResponse);
@@ -130,8 +130,7 @@ describe("openWeatherApi", () => {
         nock(OPEN_WEATHER_API_BASE_URL)
           .get("/data/2.5/weather")
           .query({
-            city: query.city,
-            state: query.state,
+            q: `${query.city},${query.state}`,
             appid: fakeApiKey,
           })
           .reply(200, fakeSuccessfulResponse);
@@ -150,7 +149,7 @@ describe("openWeatherApi", () => {
         nock(OPEN_WEATHER_API_BASE_URL)
           .get("/data/2.5/weather")
           .query({
-            city: query.city,
+            q: query.city,
             appid: fakeApiKey,
           })
           .reply(200, fakeSuccessfulResponse);
