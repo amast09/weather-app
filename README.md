@@ -3,8 +3,7 @@
 This application allows a user to display weather information for a specific
 location using their browser.
 
-Code is auto deployed to http://amast09-weather-app.s3-website-us-east-1.amazonaws.com
-(ideally this is `https` but there is only so much time in the day)
+Code is auto deployed to TODO
 
 ## Getting Started
 
@@ -37,10 +36,10 @@ cp .env.example .env
 Replace `replace-me-with-valid-api-key` inside of `.env.local` with a valid
 [Open Weather API Key](https://openweathermap.org/appid)
 
-## Run the app
+## To develop locally against the app
 
 ```
-npm start
+npm run dev
 ```
 
 ## Test the App
@@ -48,3 +47,7 @@ npm start
 ```
 npm test
 ```
+
+## Run Production Locally
+
+TODO: fill in Docker commands

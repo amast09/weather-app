@@ -2,6 +2,7 @@ import { LocationQuery, QueryType } from "../helpers/locationStringToQuery";
 import { CurrentWeatherConditions } from "../../shared/types/OpenWeatherResponses";
 import axios from "axios";
 import Dictionary from "../../shared/types/Dictionary";
+import logger from "../logger";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
 
@@ -42,6 +43,10 @@ const getCurrentWeather = (
         },
       }
     )
-    .then((result) => result.data);
+    .then((result) => result.data)
+    .catch((e) => {
+      logger.info({ ...e, tag: "openWeatherApi" });
+      throw e;
+    });
 
 export default { getCurrentWeather };

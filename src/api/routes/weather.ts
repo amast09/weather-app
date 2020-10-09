@@ -44,7 +44,6 @@ const createWeatherRouter = (openWeatherApiKey: string): Router => {
           };
           return res.status(200).json(successfulResponse);
         } catch (e) {
-          console.log(JSON.stringify(e));
           return res.status(FAILED_DEPENDENCY).send();
         }
     }

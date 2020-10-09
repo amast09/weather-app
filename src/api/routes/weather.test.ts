@@ -54,20 +54,19 @@ const fakeSuccessfulResponse: CurrentWeatherConditions = {
 
 axios.defaults.baseURL = OPEN_WEATHER_API_BASE_URL;
 
-
 const fakeEnvironment: Environment = {
   openWeatherApiKey: "gibberish",
   location: EnvironmentLocation.Test,
-  apiPort: 80
-}
+  apiPort: 80,
+};
 
 describe("weather routes", () => {
   let api: Express;
   const WEATHER_BASE_PATH = "/weather";
 
   beforeEach(() => {
-    api = createApi(fakeEnvironment)
-  })
+    api = createApi(fakeEnvironment);
+  });
 
   describe("GET /weather", () => {
     it("requires a location query param", async () => {
