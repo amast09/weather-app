@@ -1,5 +1,7 @@
 import environment from "../environment";
-import api from "../index";
+import createApi from "../index";
+
+const api = createApi(environment);
 
 api.listen(environment.apiPort, () => {
   console.log(`Server now listening on port: ${environment.apiPort}`);

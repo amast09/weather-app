@@ -6,7 +6,9 @@ import httpStatus from "http-status";
 import axios from "axios";
 import { CurrentWeatherConditions } from "../../shared/types/OpenWeatherResponses";
 import nock from "nock";
-import api from "../index";
+import createApi from "../index";
+import { Environment, EnvironmentLocation } from "../environment";
+import { Express } from "express";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
 const fakeSuccessfulResponse: CurrentWeatherConditions = {
@@ -52,14 +54,20 @@ const fakeSuccessfulResponse: CurrentWeatherConditions = {
 
 axios.defaults.baseURL = OPEN_WEATHER_API_BASE_URL;
 
-const fakeApiKey = "gibberish";
 
-jest.mock("../environment", () => ({
+const fakeEnvironment: Environment = {
   openWeatherApiKey: "gibberish",
-}));
+  location: EnvironmentLocation.Test,
+  apiPort: 80
+}
 
 describe("weather routes", () => {
+  let api: Express;
   const WEATHER_BASE_PATH = "/weather";
+
+  beforeEach(() => {
+    api = createApi(fakeEnvironment)
+  })
 
   describe("GET /weather", () => {
     it("requires a location query param", async () => {
@@ -80,7 +88,7 @@ describe("weather routes", () => {
         .get("/data/2.5/weather")
         .query({
           zipCode: locationQueryParamValue,
-          appid: fakeApiKey,
+          appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(500);
 
@@ -99,7 +107,7 @@ describe("weather routes", () => {
         .get("/data/2.5/weather")
         .query({
           zipCode: locationQueryParamValue,
-          appid: fakeApiKey,
+          appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -122,7 +130,7 @@ describe("weather routes", () => {
         .query({
           lat: latitude,
           lon: longitude,
-          appid: fakeApiKey,
+          appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -145,7 +153,7 @@ describe("weather routes", () => {
         .query({
           city: city,
           state: state,
-          appid: fakeApiKey,
+          appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -166,7 +174,7 @@ describe("weather routes", () => {
         .get("/data/2.5/weather")
         .query({
           city,
-          appid: fakeApiKey,
+          appid: fakeEnvironment.openWeatherApiKey,
         })
         .reply(200, fakeSuccessfulResponse);
 
