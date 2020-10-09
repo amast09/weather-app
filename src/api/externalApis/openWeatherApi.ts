@@ -5,6 +5,7 @@ import Dictionary from "../../shared/types/Dictionary";
 import logger from "../logger";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
+const UNITS_OF_MEASUREMENT = "imperial";
 
 const getRequestData = (query: LocationQuery): Dictionary<string> => {
   switch (query.queryType) {
@@ -39,6 +40,7 @@ const getCurrentWeather = (
         params: {
           ...getRequestData(locationQuery),
           appid: apiKey,
+          units: UNITS_OF_MEASUREMENT,
         },
       }
     )

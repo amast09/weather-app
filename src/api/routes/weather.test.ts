@@ -11,6 +11,8 @@ import { Environment, EnvironmentLocation } from "../environment";
 import { Express } from "express";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
+const EXPECTED_UNITS_OF_MEASUREMENT = "imperial";
+
 const fakeSuccessfulResponse: CurrentWeatherConditions = {
   coord: { lon: 139, lat: 35 },
   weather: [
@@ -107,6 +109,7 @@ describe("weather routes", () => {
         .query({
           zip: locationQueryParamValue,
           appid: fakeEnvironment.openWeatherApiKey,
+          units: EXPECTED_UNITS_OF_MEASUREMENT,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -130,6 +133,7 @@ describe("weather routes", () => {
           lat: latitude,
           lon: longitude,
           appid: fakeEnvironment.openWeatherApiKey,
+          units: EXPECTED_UNITS_OF_MEASUREMENT,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -152,6 +156,7 @@ describe("weather routes", () => {
         .query({
           q: `${city},${state}`,
           appid: fakeEnvironment.openWeatherApiKey,
+          units: EXPECTED_UNITS_OF_MEASUREMENT,
         })
         .reply(200, fakeSuccessfulResponse);
 
@@ -173,6 +178,7 @@ describe("weather routes", () => {
         .query({
           q: `${city}`,
           appid: fakeEnvironment.openWeatherApiKey,
+          units: EXPECTED_UNITS_OF_MEASUREMENT,
         })
         .reply(200, fakeSuccessfulResponse);
 

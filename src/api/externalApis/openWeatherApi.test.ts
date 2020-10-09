@@ -14,6 +14,7 @@ import openWeatherApi from "./openWeatherApi";
 import { CurrentWeatherConditions } from "../../shared/types/OpenWeatherResponses";
 
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
+const EXPECTED_UNITS_OF_MEASUREMENT = "imperial";
 const fakeApiKey = "gibberish";
 const fakeSuccessfulResponse: CurrentWeatherConditions = {
   coord: { lon: 139, lat: 35 },
@@ -71,6 +72,7 @@ describe("openWeatherApi", () => {
         .query({
           zipcode: query.zipCode,
           appid: fakeApiKey,
+          units: EXPECTED_UNITS_OF_MEASUREMENT,
         })
         .reply(400);
 
@@ -91,6 +93,7 @@ describe("openWeatherApi", () => {
           .query({
             zip: query.zipCode,
             appid: fakeApiKey,
+            units: EXPECTED_UNITS_OF_MEASUREMENT,
           })
           .reply(200, fakeSuccessfulResponse);
 
@@ -112,6 +115,7 @@ describe("openWeatherApi", () => {
             lat: query.latitude,
             lon: query.longitude,
             appid: fakeApiKey,
+            units: EXPECTED_UNITS_OF_MEASUREMENT,
           })
           .reply(200, fakeSuccessfulResponse);
 
@@ -132,6 +136,7 @@ describe("openWeatherApi", () => {
           .query({
             q: `${query.city},${query.state}`,
             appid: fakeApiKey,
+            units: EXPECTED_UNITS_OF_MEASUREMENT,
           })
           .reply(200, fakeSuccessfulResponse);
 
@@ -151,6 +156,7 @@ describe("openWeatherApi", () => {
           .query({
             q: query.city,
             appid: fakeApiKey,
+            units: EXPECTED_UNITS_OF_MEASUREMENT,
           })
           .reply(200, fakeSuccessfulResponse);
 

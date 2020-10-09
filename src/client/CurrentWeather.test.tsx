@@ -57,13 +57,13 @@ describe("<CurrentWeather />", () => {
     conditionLabel       | expectedTextOfElement
     ${"Location:"}       | ${conditions.name}
     ${"Date:"}           | ${expectedDate}
-    ${"Current Temp:"}   | ${conditions.main.temp.toString(10)}
-    ${"Feels Like:"}     | ${conditions.main.feels_like.toString(10)}
-    ${"High Temp:"}      | ${conditions.main.temp_max.toString(10)}
-    ${"Low Temp:"}       | ${conditions.main.temp_min.toString(10)}
-    ${"Humidity:"}       | ${`${conditions.main.humidity} %`}
-    ${"Wind Speed:"}     | ${conditions.wind.speed.toString(10)}
-    ${"Wind Direction:"} | ${`${conditions.wind.deg} deg`}
+    ${"Current Temp:"}   | ${`${Math.round(conditions.main.temp)}˚`}
+    ${"Feels Like:"}     | ${`${Math.round(conditions.main.feels_like)}˚`}
+    ${"High Temp:"}      | ${`${Math.round(conditions.main.temp_max)}˚`}
+    ${"Low Temp:"}       | ${`${Math.round(conditions.main.temp_min)}˚`}
+    ${"Humidity:"}       | ${`${Math.round(conditions.main.humidity)}%`}
+    ${"Wind Speed:"}     | ${`${Math.round(conditions.wind.speed)} mph`}
+    ${"Wind Direction:"} | ${`${Math.round(conditions.wind.deg)} deg`}
     ${"Sunrise:"}        | ${expectedSunrise}
     ${"Sunset:"}         | ${expectedSunset}
   `(

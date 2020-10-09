@@ -27,7 +27,7 @@ const CurrentWeather: React.FC<Readonly<{
         <div key="current-temp" className="current-weather-conditions__metric">
           <label id="current-condition-current-temp">Current Temp:</label>
           <p aria-labelledby="current-condition-current-temp">
-            {conditions.main.temp}
+            {Math.round(conditions.main.temp)}&#730;
           </p>
         </div>
         <div
@@ -36,31 +36,31 @@ const CurrentWeather: React.FC<Readonly<{
         >
           <label id="current-condition-feels-like-temp">Feels Like:</label>
           <p aria-labelledby="current-condition-feels-like-temp">
-            {conditions.main.feels_like}
+            {Math.round(conditions.main.feels_like)}&#730;
           </p>
         </div>
         <div key="high-temp" className="current-weather-conditions__metric">
           <label id="current-condition-high-temp">High Temp:</label>
           <p aria-labelledby="current-condition-high-temp">
-            {conditions.main.temp_max}
+            {Math.round(conditions.main.temp_max)}&#730;
           </p>
         </div>
         <div key="low-temp" className="current-weather-conditions__metric">
           <label id="current-condition-low-temp">Low Temp:</label>
           <p aria-labelledby="current-condition-low-temp">
-            {conditions.main.temp_min}
+            {Math.round(conditions.main.temp_min)}&#730;
           </p>
         </div>
         <div key="humidity" className="current-weather-conditions__metric">
           <label id="current-condition-humidity">Humidity:</label>
           <p aria-labelledby="current-condition-humidity">
-            {conditions.main.humidity} %
+            {Math.round(conditions.main.humidity)}%
           </p>
         </div>
         <div key="wind-speed" className="current-weather-conditions__metric">
           <label id="current-condition-wind-speed">Wind Speed:</label>
           <p aria-labelledby="current-condition-wind-speed">
-            {conditions.wind.speed}
+            {Math.round(conditions.wind.speed)} mph
           </p>
         </div>
         <div
@@ -69,7 +69,7 @@ const CurrentWeather: React.FC<Readonly<{
         >
           <label id="current-condition-wind-direction">Wind Direction:</label>
           <p aria-labelledby="current-condition-wind-direction">
-            {conditions.wind.deg} deg
+            {Math.round(conditions.wind.deg)} deg
           </p>
         </div>
         <div key="sunrise-time" className="current-weather-conditions__metric">

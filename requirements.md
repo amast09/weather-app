@@ -17,8 +17,8 @@
   - [x] State
   - [x] City, State
 - [x] Use cutsie pictures for weather condition id https://openweathermap.org/weather-conditions#How-to-get-icon-URL
-- [ ] Convert to imperial units
-- [ ] Component level tests for display components
+- [x] Convert to imperial units
+- [x] Component level tests for display components
 - [ ] Deploy to EC2 instance with docker on CI
 - [ ] Update README about where CI deploys
 - [ ] Update README with local prod deploy
