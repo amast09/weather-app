@@ -1,0 +1,6 @@
+import environment from "../environment";
+import api from "../index";
+
+api.listen(environment.apiPort, () => {
+  console.log(`Server now listening on port: ${environment.apiPort}`);
+});

@@ -1,46 +1,28 @@
-/**
- * @jest-environment node
- */
 import axios from "axios";
 import nock from "nock";
-import createOpenWeatherApi from "./openWeatherApi";
-import LatLon from "./LatLon";
+import apiClient from "./apiClient";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 
-const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org";
-const fakeApiKey = "gibberish";
-
-axios.defaults.baseURL = OPEN_WEATHER_API_BASE_URL;
-
-const openWeatherApi = createOpenWeatherApi(fakeApiKey);
+const BASE_URL = 'http://localhost';
+axios.defaults.baseURL = BASE_URL;
 
 describe("openWeatherApi", () => {
   describe("getWeatherForLatLng", () => {
     it("returns a void promise on failure", async () => {
-      const latLon: LatLon = {
-        lat: 9,
-        lon: 8,
-      };
+      const location = "Clemson, SC";
 
-      nock(OPEN_WEATHER_API_BASE_URL)
-        .get("/data/2.5/weather")
+      nock(BASE_URL)
+        .get("/weather")
         .query({
-          lat: latLon.lat,
-          lon: latLon.lon,
-          appid: fakeApiKey,
+          location,
         })
         .reply(400);
 
-      await expect(
-        openWeatherApi.getWeatherForLatLng(latLon)
-      ).rejects.toThrow();
+      await expect(apiClient.getCurrentWeather(location)).rejects.toThrow();
     });
 
-    it("returns a the response from the Open Weather API when it succeeds", async () => {
-      const latLon: LatLon = {
-        lat: 9,
-        lon: 8,
-      };
+    it("returns the response from the API when it succeeds", async () => {
+      const location = "Clemson, SC";
       const fakeSuccessfulResponse: CurrentWeatherConditions = {
         coord: { lon: 139, lat: 35 },
         weather: [
@@ -82,16 +64,12 @@ describe("openWeatherApi", () => {
         cod: 200,
       };
 
-      nock(OPEN_WEATHER_API_BASE_URL)
-        .get("/data/2.5/weather")
-        .query({
-          lat: latLon.lat,
-          lon: latLon.lon,
-          appid: fakeApiKey,
-        })
+      nock(BASE_URL)
+        .get("/weather")
+        .query({ location })
         .reply(200, fakeSuccessfulResponse);
 
-      await expect(openWeatherApi.getWeatherForLatLng(latLon)).resolves.toEqual(
+      await expect(apiClient.getCurrentWeather(location)).resolves.toEqual(
         fakeSuccessfulResponse
       );
     });

@@ -31,8 +31,8 @@ const getRequestData = (query: LocationQuery): Dictionary<string> => {
 const getCurrentWeather = (
   apiKey: string,
   locationQuery: LocationQuery
-): Promise<CurrentWeatherConditions> => {
-  return axios
+): Promise<CurrentWeatherConditions> =>
+  axios
     .get<CurrentWeatherConditions>(
       `${OPEN_WEATHER_API_BASE_URL}/data/2.5/weather`,
       {
@@ -43,6 +43,5 @@ const getCurrentWeather = (
       }
     )
     .then((result) => result.data);
-};
 
 export default { getCurrentWeather };

@@ -7,11 +7,9 @@ import AsyncRequest, {
   AsyncRequestNotStarted,
 } from "./AsyncRequest";
 import getLocation from "./getLocation";
-import createOpenWeatherApi from "./openWeatherApi";
-import LatLon from "./LatLon";
+import apiClient from "./apiClient";
+import LatLon from "./types/LatLon";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
-
-const openWeatherApi = createOpenWeatherApi("moving into API");
 
 const fallBackLatLon: LatLon = {
   lat: 34.6787,
@@ -88,8 +86,8 @@ const App: React.FC = () => {
     setUsersWeather(AsyncRequestLoading());
 
     try {
-      const weatherConditions = await openWeatherApi.getWeatherForLatLng(
-        latLon
+      const weatherConditions = await apiClient.getCurrentWeather(
+        `${latLon.lat}, ${latLon.lon}`
       );
       setUsersWeather(AsyncRequestCompleted(weatherConditions));
     } catch (_) {
