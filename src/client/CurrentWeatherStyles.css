@@ -1,0 +1,29 @@
+.current-weather-conditions {
+  display: flex;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.current-weather-conditions p,
+.current-weather-conditions label {
+  display: inline-block;
+  margin: 0;
+}
+
+.current-weather-conditions label {
+  margin-right: 5px;
+  font-weight: 800;
+}
+
+.current-weather-conditions__metric {
+  margin-bottom: 5px;
+}
+
+.current-weather-conditions__image-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-transform: capitalize;
+}

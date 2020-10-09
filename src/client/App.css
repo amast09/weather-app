@@ -1,7 +1,21 @@
+.weather-app {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+}
+
 .current-location-icon {
   width: 20px;
   height: 20px;
 }
+
 .weather-form {
   display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.weather-form button {
+  margin-left: 10px;
 }

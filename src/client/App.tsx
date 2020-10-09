@@ -11,26 +11,19 @@ import apiClient from "./apiClient";
 import { CurrentWeatherConditions } from "../shared/types/OpenWeatherResponses";
 import CurrentLocation from "./icons/CurrentLocation";
 import "./App.css";
-
-const CurrentWeather: React.FC<Readonly<{
-  currentWeather: CurrentWeatherConditions;
-}>> = ({ currentWeather }) => (
-  <div>
-    <h4>Current Weather Conditions</h4>
-    <p>{JSON.stringify(currentWeather)}</p>
-  </div>
-);
+import CurrentWeather from "./CurrentWeather";
+import Loader from "./Loader";
 
 const AsyncCurrentWeather: React.FC<Readonly<{
   asyncCurrentWeather: AsyncRequest<CurrentWeatherConditions>;
 }>> = ({ asyncCurrentWeather }) => {
   switch (asyncCurrentWeather.kind) {
     case AsyncRequestKinds.Completed:
-      return <CurrentWeather currentWeather={asyncCurrentWeather.result} />;
+      return <CurrentWeather conditions={asyncCurrentWeather.result} />;
     case AsyncRequestKinds.Failed:
       return <p>Unable to load current weather conditions</p>;
     case AsyncRequestKinds.Loading:
-      return <p>LOADING WEATHER!</p>;
+      return <Loader />;
     case AsyncRequestKinds.NotStarted:
       return <></>;
   }
@@ -110,7 +103,12 @@ const App: React.FC = () => {
           <div onClick={setUserPosition}>
             <CurrentLocation />
           </div>
-          <button type="submit">Get Weather</button>
+          <button
+            type="submit"
+            title="5 digit zipcode | latitude, longitude | city, state | city"
+          >
+            Get Weather
+          </button>
         </form>
         {/* TODO (Nice to have):
             debounce the loading treatment if the async actions are quick
