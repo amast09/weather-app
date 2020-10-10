@@ -25,11 +25,7 @@ const getEnvironmentLocation = (): EnvironmentLocation => {
 };
 
 const getEnvironment = (): Environment => {
-  const result = dotenv.config();
-
-  if (result.error) {
-    throw result.error;
-  }
+  dotenv.config();
 
   if (process.env.OPEN_WEATHER_API_KEY === undefined) {
     throw new Error("Missing Environment Variable: OPEN_WEATHER_API_KEY");
