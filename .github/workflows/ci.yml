@@ -67,6 +67,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           echo $PEM > your-weather-report.pem
+          chmod 600 your-weather-report.pem
           ssh -o "StrictHostKeyChecking no" -i your-weather-report.pem ubuntu@yourweather.report 'bash -s' < \
           deploy.sh \
             $IMAGE_TAG \
