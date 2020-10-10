@@ -23,8 +23,8 @@ docker stop ${app_container_name} || true && \
 
 docker run -d -p ${api_port}:${api_port} \
   --name ${app_container_name} \
-  --env API_PORT=${open_weather_api_key} \
-  --env OPEN_WEATHER_API_KEY=${api_port} \
+  --env API_PORT=${api_port} \
+  --env OPEN_WEATHER_API_KEY=${open_weather_api_key} \
   ${docker_registery}:${image_tag}
 
 docker image prune -a -f

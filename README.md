@@ -3,7 +3,7 @@
 This application allows a user to display weather information for a specific
 location using their browser.
 
-Code is auto deployed to TODO
+Code is auto deployed to [yourweather.report](https://yourweather.report)
 
 ## Getting Started
 
@@ -50,4 +50,11 @@ npm test
 
 ## Run Production Locally
 
-TODO: fill in Docker commands
+```
+docker build -t weather-app-image .
+docker run -d -p 80:80 \
+  --name weather-app-container \
+  --env API_PORT=80 \
+  --env OPEN_WEATHER_API_KEY=<your-weather-key> \
+  weather-app-image
+```
