@@ -32,10 +32,6 @@ const getEnvironment = (): Environment => {
   } else if (process.env.API_PORT === undefined) {
     throw new Error("Missing Environment Variable: APP_API_PORT");
   } else {
-    console.log(process.env);
-    console.log(process.env.API_PORT);
-    console.log(Number(process.env.API_PORT));
-
     return {
       openWeatherApiKey: process.env.OPEN_WEATHER_API_KEY,
       apiPort: Number(process.env.API_PORT) ? Number(process.env.API_PORT) : 80,
