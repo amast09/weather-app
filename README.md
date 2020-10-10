@@ -42,6 +42,8 @@ Replace `replace-me-with-valid-api-key` inside of `.env.local` with a valid
 npm run dev
 ```
 
+Open http://localhost:3000 in your browser
+
 ## Test the App
 
 ```
@@ -58,3 +60,5 @@ docker run -d -p 80:80 \
   --env OPEN_WEATHER_API_KEY=<your-weather-key> \
   weather-app-image
 ```
+
+open http://localhost in your browser
