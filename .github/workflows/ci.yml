@@ -51,28 +51,26 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: amast09/weather-app
           IMAGE_TAG: ${{ github.sha }}
-          API_PORT: 443
-          OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
         run: |
-          docker build \
-            --build-arg API_PORT=$API_PORT \
-            --build-arg OPEN_WEATHER_API_KEY=$OPEN_WEATHER_API_KEY \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-#      - name: Fill in the new image ID in the Amazon ECS task definition
-#        id: task-def
-#        uses: aws-actions/amazon-ecs-render-task-definition@v1
-#        with:
-#          task-definition: aws-ecr-task-definition.json
-#          container-name: weather-app
-#          image: ${{ steps.build-image.outputs.image }}
-#
-#      - name: Deploy Amazon ECS task definition
-#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-#        with:
-#          task-definition: ${{ steps.task-def.outputs.task-definition }}
-#          service: weather-app-service
-#          cluster: weather-app
-#          wait-for-service-stability: true
+      - name: Deploy to EC2 Image
+        id: deploy-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          API_PORT: 443
+          OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+          PEM: ${{ secrets.PEM }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo $PEM > your-weather-report.pem
+          ssh -i your-weather-report.pem ubuntu@yourweather.report \
+          sh deploy.sh \
+            $IMAGE_TAG \
+            $AWS_ACCESS_KEY_ID \
+            $AWS_SECRET_ACCESS_KEY \
+            $OPEN_WEATHER_API_KEY \
+            $API_PORT
