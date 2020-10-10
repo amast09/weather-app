@@ -67,6 +67,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           echo $PEM > your-weather-report.pem
+          cat your-weather-report.pem
           ssh -i your-weather-report.pem ubuntu@yourweather.report \
           sh deploy.sh \
             $IMAGE_TAG \
