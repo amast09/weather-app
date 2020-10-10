@@ -22,6 +22,8 @@
 - [x] Deploy to EC2 instance with docker on CI
 - [x] Update README about where CI deploys
 - [x] Update README with local prod deploy
+- [ ] Fix AWS Load Balancer to allow domain name + https
+- [ ] Abstract out a component from App component to write additional component tests
 
 ## Post MVP Release
 
