@@ -3,7 +3,7 @@
 This application allows a user to display weather information for a specific
 location using their browser.
 
-Code is auto deployed to [here](http://3.91.206.129/) (will be a proper domain at some point with https)
+Code is auto deployed to [here](http://3.91.206.129/) (browser geo location will not work until I get a proper domain + https setup)
 
 ## Getting Started
 
